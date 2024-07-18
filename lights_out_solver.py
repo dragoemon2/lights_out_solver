@@ -95,7 +95,16 @@ def const_mask(M: int, N: int) -> np.ndarray:
     return vector2
 
 
-def lights_out(M, N):
+def lights_out(M: int, N: int) -> np.ndarray:
+    """Lights Out Puzzleを解く。
+
+    Args:
+        M (int): 幅
+        N (int): 高さ
+
+    Returns:
+        np.ndarray: 解
+    """
     pascal_array = pascal(M, N)
     const_array = const_mask(M, N)
 
@@ -105,12 +114,13 @@ def lights_out(M, N):
             last[j2] |= int(pascal_array[abs(j2-j1)] ^ pascal_array[abs(2*N+2-j1-j2)] ^ pascal_array[j1 + j2]) << j1
             last[j2] |= int(const_array[j2])
 
+    # 拡大係数行列
     last = last[1:-1]
 
-    print(type(last[0]))
-
+    # ガウスの消去法
     result = gaussian_elimination_bit(last)
 
+    # 結果を生成
     result_map = np.zeros((M+2, N+2), dtype=bool)
     for j in range(1, N+1):
         result_map[1][j] = (result >> (j-1)) & 1

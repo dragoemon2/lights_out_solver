@@ -54,5 +54,7 @@ Height: 1000
 ### Output
 
 ![lights_out_solver](resources/sample_image_1000x1000.png)
-(White: on, Black: off)
+(White: unpressed, Black: pressed)
+
+
 
